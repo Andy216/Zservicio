@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="personaXml">
+
+	<resultMap id="rslt" type="pers" >
+        <result property="id" column="ID"/>
+        <result property="nombre" column="NOMBRE"/>
+        <result property="email" column="CORREO"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="rslt">
+        SELECT ID, NOMBRE, CORREO
+		from TBL_PERSONA 		
+    </select>
+    
+    <select id="findById" resultMap="rslt" parameterType="java.lang.Long" >
+        SELECT ID, NOMBRE, CORREO
+		from TBL_PERSONA
+		WHERE id = #{id}
+    </select>
+    
+    <insert id="insert" parameterType="pers">	
+        INSERT INTO TBL_PERSONA (NOMBRE, CORREO)
+		VALUES ( #{nombre},#{email})
+    </insert>
+
+  	<update id="update" parameterType="pers">
+        UPDATE TBL_PERSONA
+        SET NOMBRE = #{nombre},
+        CORREO =  #{email}
+        WHERE ID = #{id} 
+  	</update>
+
+    <delete id="deleteAll" >
+        DELETE from TBL_PERSONA 
+    </delete>
+    
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE from TBL_PERSONA where ID = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/util
+  		http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:component-scan base-package="com.acz.demoapp" />
+	<mvc:annotation-driven />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+<!-- 	<bean id="log4jInitialization" -->
+<!-- 		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> -->
+<!-- 		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" /> -->
+<!-- 		<property name="targetMethod" value="initLogging" /> -->
+<!-- 		<property name="arguments"> -->
+<!-- 			<list> -->
+<!-- 				<value>${logs.dir}/log.config</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+<!-- 	<property name="jndiName" value="java:comp/env/jdbc/mssql"/> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="dataSource" -->
+<!-- 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+<!-- 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" /> -->
+<!-- 		<property name="url" value="jdbc:sqlserver://192.168.2.4\SQL2008R2;DatabaseName=db_xerox" /> -->
+<!-- 		<property name="username" value="sa" /> -->
+<!-- 		<property name="password" value="Abc123456" />		 -->
+<!-- 	</bean> -->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	     <property name="driverClassName" value="org.postgresql.Driver" />
+	     <property name="url" value="jdbc:postgresql://ec2-107-20-193-74.compute-1.amazonaws.com:5432/da81i87t0umkt8?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory" />
+	     <property name="username" value="haooiqrdggtdkx" />
+	     <property name="password" value="427b1c1b194f68e15567b1e2fb6e24ed9956e238e163fc10ff2083e0ddc7c7da" />
+	 </bean>
+	
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatisConf.xml" />		
+	</bean>
+
+
+</beans>
